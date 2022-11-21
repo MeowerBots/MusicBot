@@ -1,4 +1,4 @@
-# Music Bot
+# MusicBot
 A Meower bot that gives info about music!
 ## Running
 ```
