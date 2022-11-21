@@ -9,7 +9,7 @@ dotenv.config();
 const username = process.env["MB_USERNAME"];
 const password = process.env["MB_PASSWORD"];
 
-const help = ["music help"];
+const help = [":help", ":search"];
 
 const spotify = new Spotify({
     consumer: {
@@ -33,22 +33,22 @@ async function handlePost(user, message) {
         return;
     }
 
-    if (message.startsWith("music ") && !(help.includes(message.split(" ")[0]))) {
-        post("That command doesn't exist! Use music help to see a list of commands.");
+    if (message.startsWith(":") && !(help.includes(message.split(" ")[0]))) {
+        post("That command doesn't exist! Use :help to see a list of commands.");
         return;
     }
 
-    if (message.startsWith("music help")) {
+    if (message.startsWith(":help")) {
         post(`Commands: ${help.join(", ")}`);
     }
 
-    if (message.startsWith("music search")) {
+    if (message.startsWith(":search")) {
         const data = await spotify.search({
             q: message.split(" ").slice(2, message.split(" ").length).join(" "),
             type: "track",
             limit: 3
         });
-        post(`\t${data.tracks.items.join("\n\t")}`);
+        post(`\t${data?.tracks.items.join("\n\t")}`);
     }
 }
 
@@ -64,7 +64,7 @@ async function connect() {
     ws.send('{"cmd": "direct", "val": {"cmd": "version_chk", "val": "scratch-beta-5-r7"}}');
     ws.send(`{"cmd": "direct", "val": {"cmd": "authpswd", "val": {"username": "${username}", "pswd": "${password}"}}}`);
     setTimeout(function() {
-        post(`${username} is now online! Use ~help to see a list of commands.`);
+        post(`${username} is now online! Use :help to see a list of commands.`);
     }, 1000);
 }
 

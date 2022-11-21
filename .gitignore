@@ -3,3 +3,4 @@ db.json
 .env
 .replit
 replit.nix
+store/
