@@ -3,11 +3,6 @@ import fetch from "node-fetch";
 export default class Musixmatch {
     constructor(key) {
         this.key = key;
-        var url = encodeURIComponent(`https://api.musixmatch.com/ws/1.1/&apikey=${this.key}`);
-        var res = await fetch(`https://api.allorigins.win/get?url=${url}`).then(res => res.text());
-        if (JSON.parse(res).message.header.status_code == 401) {
-            new Error("Musixmatch API key is invalid");
-        }
     }
     
     async search(query) {
