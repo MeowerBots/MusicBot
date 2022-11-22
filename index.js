@@ -9,9 +9,11 @@ dotenv.config();
 const username = process.env["MB_USERNAME"];
 const password = process.env["MB_PASSWORD"];
 
-const help = [":help", ":search", ":song", ":lyrics"];
+const help = [":help", ":search", ":find", ":lyrics"];
 
 const musixmatch = new Musixmatch(process.env["MB_APIKEY"]);
+
+var string = "";
 
 function epochToRelative(timestamp) {
     var msPerMinute = 60 * 1000;
@@ -92,23 +94,32 @@ async function handlePost(user, message) {
         if (results === "") {
             post("No results found.");
         } else {
-            post(`Search results for "${message.split(" ").slice(1, message.split(" ").length).join(" ")}":\n\t${results[0].track.track_name} by ${results[0].track.artist_name} (${results[0].track.commontrack_id})\n\t${results[1].track.track_name} by ${results[1].track.artist_name} (${results[1].track.commontrack_id})\n\t${results[2].track.track_name} by ${results[2].track.artist_name} (${results[2].track.commontrack_id})\n\t${results[3].track.track_name} by ${results[3].track.artist_name} (${results[3].track.commontrack_id})\n\t${results[4].track.track_name} by ${results[4].track.artist_name} (${results[4].track.commontrack_id})`);
+            post(`Search results for "${message.split(" ").slice(1, message.split(" ").length).join(" ")}":
+        ${results[0].track.track_name} by ${results[0].track.artist_name} (${results[0].track.commontrack_id})
+        ${results[1].track.track_name} by ${results[1].track.artist_name} (${results[1].track.commontrack_id})
+        ${results[2].track.track_name} by ${results[2].track.artist_name} (${results[2].track.commontrack_id})
+        ${results[3].track.track_name} by ${results[3].track.artist_name} (${results[3].track.commontrack_id})
+        ${results[4].track.track_name} by ${results[4].track.artist_name} (${results[4].track.commontrack_id})`);
         }
     }
 
-    if (message.startsWith(":song")) {
+    if (message.startsWith(":find")) {
         const song = await musixmatch.song(message.split(" ")[1]);
         if (song === "") {
-            post("No results found.");
+            post("Couldn't get info about this song.");
         } else {
-            post(`${song.track_name} by ${song.artist_name}:\n\tRating: ${song.track_rating}\n\tLast updated ${epochToRelative(new Date(song.updated_time).getTime())}\n\tGenre: ${(song.primary_genres.music_genre_list[0].music_genre.music_genre_name ? song.primary_genres.music_genre_list[0].music_genre.music_genre_name : "None")}\n\tFavorites: `);
+            post(`${song.track_name} by ${song.artist_name}:
+        Rating: ${song.track_rating}
+        Last updated ${epochToRelative(new Date(song.updated_time).getTime())}
+        Genre: ${(song.primary_genres.music_genre_list[0] ? song.primary_genres.music_genre_list[0].music_genre.music_genre_name : "None")}
+        Times Favorited: ${song.num_favorite}`);
         }
     }
 
     if (message.startsWith(":lyrics")) {
         const lyrics = await musixmatch.lyrics(message.split(" ")[1]);
         if (lyrics === "") {
-            post("No results found.");
+            post("Couldn't find the lyrics for this song.");
         } else {
             post(`${lyrics.split("\n").slice(0, 4).join("\n")}`);
         }
