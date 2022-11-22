@@ -22,10 +22,9 @@ export default class Musixmatch {
         var track = await fetch(`https://api.allorigins.win/get?url=${url}`).then(res => res.text());
         var track = JSON.parse(track);
         var lyrics = JSON.parse(track.contents);
-        if (lyrics.message.header.status_code != 200) {
+        if (lyrics.message.header.status_code != 200 || lyrics.message.body.lyrics.explicit === 1) {
             return "";
         } else {
-            console.log(lyrics.message.body.lyrics.lyrics_body.split("\n"));
             return lyrics.message.body.lyrics.lyrics_body;
         }
     }
@@ -35,7 +34,7 @@ export default class Musixmatch {
         var song = await fetch(`https://api.allorigins.win/get?url=${url}`).then(res => res.text());
         var song = JSON.parse(song);
         var song = JSON.parse(song.contents);
-        if (song.message.header.status_code != 200) {
+        if (song.message.header.status_code != 200 || song.message.body.track.explicit === 1) {
             return "";
         } else {
             return song.message.body.track;
