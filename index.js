@@ -42,7 +42,7 @@ async function handlePost(user, message) {
         if (results === "") {
             post("No results found.");
         } else {
-            post(`Search results for "${message.split(" ").slice(1, message.split(" ").length).join(" ")}":\n\t${results[0].track.track_name} (${results[0].track.commontrack_id})\n\t${results[1].track.track_name} (${results[1].track.commontrack_id})\n\t${results[2].track.track_name} (${results[2].track.commontrack_id})\n\t${results[3].track.track_name} (${results[3].track.commontrack_id})\n\t${results[4].track.track_name} (${results[4].track.commontrack_id})`);
+            post(`Search results for "${message.split(" ").slice(1, message.split(" ").length).join(" ")}":\n\t${results[0].track.track_name} by ${results[0].track.artist_name} (${results[0].track.commontrack_id})\n\t${results[1].track.track_name} by ${results[1].track.artist_name} (${results[1].track.commontrack_id})\n\t${results[2].track.track_name} by ${results[2].track.artist_name} (${results[2].track.commontrack_id})\n\t${results[3].track.track_name} by ${results[3].track.artist_name} (${results[3].track.commontrack_id})\n\t${results[4].track.track_name} by ${results[4].track.artist_name} (${results[4].track.commontrack_id})`);
         }
     }
 
