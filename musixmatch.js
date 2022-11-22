@@ -7,8 +7,7 @@ export default class Musixmatch {
     
     async search(query) {
         var url = encodeURIComponent(`https://api.musixmatch.com/ws/1.1/track.search?q=${query}&apikey=${this.key}`);
-        var tracks = await fetch(`https://api.allorigins.win/get?url=${url}`).then(res => res.text());
-        var tracks = JSON.parse(tracks);
+        var tracks = await fetch(`https://api.allorigins.win/get?url=${url}`).then(res => res.json());
         var tracks = JSON.parse(tracks.contents);
         if (tracks.message.body.track_list.length == 0) {
             return "";
@@ -19,8 +18,7 @@ export default class Musixmatch {
 
     async lyrics(id) {
         var url = encodeURIComponent(`https://api.musixmatch.com/ws/1.1/track.lyrics.get?commontrack_id=${id}&apikey=${this.key}`);
-        var track = await fetch(`https://api.allorigins.win/get?url=${url}`).then(res => res.text());
-        var track = JSON.parse(track);
+        var track = await fetch(`https://api.allorigins.win/get?url=${url}`).then(res => res.json());
         var lyrics = JSON.parse(track.contents);
         if (lyrics.message.header.status_code != 200 || lyrics.message.body.lyrics.explicit === 1) {
             return "";
@@ -31,8 +29,7 @@ export default class Musixmatch {
 
     async song(id) {
         var url = encodeURIComponent(`https://api.musixmatch.com/ws/1.1/track.get?commontrack_id=${id}&apikey=${this.key}`);
-        var song = await fetch(`https://api.allorigins.win/get?url=${url}`).then(res => res.text());
-        var song = JSON.parse(song);
+        var song = await fetch(`https://api.allorigins.win/get?url=${url}`).then(res => res.json());
         var song = JSON.parse(song.contents);
         if (song.message.header.status_code != 200 || song.message.body.track.explicit === 1) {
             return "";
