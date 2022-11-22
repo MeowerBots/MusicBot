@@ -26,7 +26,7 @@ export default class Musixmatch {
         var url = encodeURIComponent(`https://api.musixmatch.com/ws/1.1/track.lyrics.get?commontrack_id=${id}&apikey=${this.key}`);
         var track = await fetch(`https://api.allorigins.win/get?url=${url}`).then(res => res.json());
         var lyrics = JSON.parse(track.contents);
-        if (lyrics.message.header.status_code != 200 || song.message.body.track.explicit === 1) {
+        if (lyrics.message.header.status_code != 200 || lyrics.message.body.lyrics.explicit === 1) {
             return "";
         } else {
             return lyrics.message.body.lyrics.lyrics_body;
