@@ -101,7 +101,7 @@ async function handlePost(user, message) {
         if (song === "") {
             post("No results found.");
         } else {
-            post(`${song.track_name} by ${song.artist_name}:\n\tRating: ${song.track_rating}\n\tLast updated ${epochToRelative(new Date(song.updated_time).getTime())}\n\tGenre: ${song.primary_genres.music_genre_list[0].music_genre.music_genre_name}`);
+            post(`${song.track_name} by ${song.artist_name}:\n\tRating: ${song.track_rating}\n\tLast updated ${epochToRelative(new Date(song.updated_time).getTime())}\n\tGenre: ${song.primary_genres.music_genre_list[0].music_genre.music_genre_name}\n\t`);
         }
     }
 

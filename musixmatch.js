@@ -6,7 +6,7 @@ export default class Musixmatch {
     }
     
     async search(query) {
-        var url = encodeURIComponent(`https://api.musixmatch.com/ws/1.1/track.search?q=${query}&apikey=${this.key}`);
+        var url = encodeURIComponent(`https://api.musixmatch.com/ws/1.1/track.search?q=${query}&f_lyrics_language=en&apikey=${this.key}`);
         var tracks = await fetch(`https://api.allorigins.win/get?url=${url}`).then(res => res.json());
         var tracks = JSON.parse(tracks.contents);
         if (tracks.message.body.track_list.length == 0) {
