@@ -12,7 +12,13 @@ export default class Musixmatch {
         if (tracks.message.body.track_list.length == 0) {
             return "";
         } else {
-            return tracks.message.body.track_list;
+            var list = tracks.message.body.track_list;
+            for (let i in list) {
+                if (list[i].track.explicit === 1) {
+                    list.splice(i, 1);
+                }
+            }
+            return list;
         }
     }
 
