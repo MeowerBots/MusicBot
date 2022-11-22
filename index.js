@@ -13,8 +13,6 @@ const help = [":help", ":search", ":find", ":lyrics"];
 
 const musixmatch = new Musixmatch(process.env["MB_APIKEY"]);
 
-var string = "";
-
 function epochToRelative(timestamp) {
     var msPerMinute = 60 * 1000;
     var msPerHour = msPerMinute * 60;
@@ -110,7 +108,7 @@ async function handlePost(user, message) {
         } else {
             post(`${song.track_name} by ${song.artist_name}:
         Rating: ${song.track_rating}
-        Last updated ${epochToRelative(new Date(song.updated_time).getTime())}
+        Last updated: ${epochToRelative(new Date(song.updated_time).getTime())}
         Genre: ${(song.primary_genres.music_genre_list[0] ? song.primary_genres.music_genre_list[0].music_genre.music_genre_name : "None")}
         Times Favorited: ${song.num_favourite}`);
         }
