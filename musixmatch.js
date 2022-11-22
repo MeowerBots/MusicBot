@@ -18,8 +18,7 @@ export default class Musixmatch {
                     list.splice(i, 1);
                 }
             }
-            tracks.message.body.track_list = list;
-            return tracks.message.body.track_list;
+            return list;
         }
     }
 
