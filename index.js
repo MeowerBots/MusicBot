@@ -2,21 +2,16 @@ import WebSocket from "ws";
 import fetch from "node-fetch";
 import {exec} from "child_process";
 import * as dotenv from "dotenv";
-import Spotify from "spotify-get";
+import Musixmatch from "./musixmatch.js";
 
 dotenv.config();
 
 const username = process.env["MB_USERNAME"];
 const password = process.env["MB_PASSWORD"];
 
-const help = [":help", ":search"];
+const help = [":help", ":search", ":song", ":lyrics"];
 
-const spotify = new Spotify({
-    consumer: {
-        key: process.env["MB_SPOTIFY_CLIENTID"],
-        secret: process.env["MB_SPOTIFY_SECRET"]
-    }
-});
+const musixmatch = new Musixmatch(process.env["MB_APIKEY"]);
 
 async function fetchURL(url) {
     return await fetch(url).then(res => res.text());
@@ -43,12 +38,30 @@ async function handlePost(user, message) {
     }
 
     if (message.startsWith(":search")) {
-        const data = await spotify.search({
-            q: message.split(" ").slice(2, message.split(" ").length).join(" "),
-            type: "track",
-            limit: 3
-        });
-        post(`\t${data?.tracks.items.join("\n\t")}`);
+        const results = await musixmatch.search(message.split(" ").slice(1, message.split(" ").length).join(" "));
+        if (results === "") {
+            post("No results found.");
+        } else {
+            post(`Search results for "${message.split(" ").slice(1, message.split(" ").length).join(" ")}":\n\t${results[0].track.track_name} (${results[0].track.commontrack_id})\n\t${results[1].track.track_name} (${results[1].track.commontrack_id})\n\t${results[2].track.track_name} (${results[2].track.commontrack_id})\n\t${results[3].track.track_name} (${results[3].track.commontrack_id})\n\t${results[4].track.track_name} (${results[4].track.commontrack_id})`);
+        }
+    }
+
+    if (message.startsWith(":song")) {
+        const song = await musixmatch.song(message.split(" ")[1]);
+        if (song === "") {
+            post("No results found.");
+        } else {
+            post(`${song.track_name} by ${song.artist_name}:\n\tRating: ${song.track_rating}`);
+        }
+    }
+
+    if (message.startsWith(":lyrics")) {
+        const lyrics = await musixmatch.lyrics(message.split(" ")[1]);
+        if (lyrics === "") {
+            post("No results found.");
+        } else {
+            post(`${lyrics.split("\n").slice(0, 4).join("\n")}`);
+        }
     }
 }
 
