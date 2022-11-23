@@ -95,9 +95,7 @@ async function handlePost(user, message) {
             post(`Search results for "${message.split(" ").slice(1, message.split(" ").length).join(" ")}":
         ${results[0].track.track_name} by ${results[0].track.artist_name} (${results[0].track.commontrack_id})
         ${results[1].track.track_name} by ${results[1].track.artist_name} (${results[1].track.commontrack_id})
-        ${results[2].track.track_name} by ${results[2].track.artist_name} (${results[2].track.commontrack_id})
-        ${results[3].track.track_name} by ${results[3].track.artist_name} (${results[3].track.commontrack_id})
-        ${results[4].track.track_name} by ${results[4].track.artist_name} (${results[4].track.commontrack_id})`);
+        ${results[2].track.track_name} by ${results[2].track.artist_name} (${results[2].track.commontrack_id})`);
         }
     }
 
