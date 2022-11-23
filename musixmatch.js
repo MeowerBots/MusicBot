@@ -10,7 +10,7 @@ export default class Musixmatch {
         var tracks = await fetch(`https://api.allorigins.win/get?url=${url}`).then(res => res.json());
         var tracks = JSON.parse(tracks.contents);
         if (tracks.message.body.track_list.length == 0) {
-            return "";
+            return [];
         } else {
             var list = tracks.message.body.track_list;
             for (let i in list) {

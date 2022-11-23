@@ -13,6 +13,11 @@ const help = [":help", ":search", ":find", ":lyrics"];
 
 const musixmatch = new Musixmatch(process.env["MB_APIKEY"]);
 
+async function shorten(url) {
+    const result = await fetch(`https://api.shrtco.de/v2/shorten?url=${url}`).then(res => res.json());
+    return result.result.full_short_link;
+}
+
 function epochToRelative(timestamp) {
     var msPerMinute = 60 * 1000;
     var msPerHour = msPerMinute * 60;
@@ -89,7 +94,7 @@ async function handlePost(user, message) {
 
     if (message.startsWith(":search")) {
         const results = await musixmatch.search(message.split(" ").slice(1, message.split(" ").length).join(" "));
-        if (results === "") {
+        if (results.length === 0) {
             post("No results found.");
         } else {
             post(`Search results for "${message.split(" ").slice(1, message.split(" ").length).join(" ")}":
@@ -109,7 +114,8 @@ async function handlePost(user, message) {
         Last updated: ${epochToRelative(new Date(song.updated_time).getTime())}
         Genre: ${(song.primary_genres.music_genre_list[0] ? song.primary_genres.music_genre_list[0].music_genre.music_genre_name : "None")}
         Times Favorited: ${song.num_favourite}
-        URL: ${song.track_share_url}`);
+        URL: ${song.track_share_url}
+        Score: ${(0 > song.track_rating ? "🟥" : (50 > song.track_rating ? "🟨" : (100 > song.track_rating ? "🟩" : "🟩")))}`);
         }
     }
 
