@@ -110,7 +110,8 @@ async function handlePost(user, message) {
         Rating: ${song.track_rating}
         Last updated: ${epochToRelative(new Date(song.updated_time).getTime())}
         Genre: ${(song.primary_genres.music_genre_list[0] ? song.primary_genres.music_genre_list[0].music_genre.music_genre_name : "None")}
-        Times Favorited: ${song.num_favourite}`);
+        Times Favorited: ${song.num_favourite}
+        URL: ${song.track_share_url}`);
         }
     }
 
