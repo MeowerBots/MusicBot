@@ -2,7 +2,7 @@ import WebSocket from "ws";
 import fetch from "node-fetch";
 import {exec} from "child_process";
 import * as dotenv from "dotenv";
-import Musixmatch from "./musixmatch.js";
+import Musixmatch from "./lib/musixmatch.js";
 
 dotenv.config();
 
