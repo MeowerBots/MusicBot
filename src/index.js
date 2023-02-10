@@ -69,6 +69,10 @@ bot.onClose(() => {
     });
 });
 
+bot.onMessage((data) => {
+    console.log(`New message: ${data}`);
+});
+
 bot.onLogin(() => {
     bot.post(`${username} is now online! Use :help to see a ist of commands.`);
 });
