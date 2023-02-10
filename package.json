@@ -2,7 +2,7 @@
   "name": "musicbot",
   "version": "1.0.0",
   "description": "A Meower bot that gives info about music!",
-  "main": "index.js",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
     "start": "node ."
@@ -19,8 +19,7 @@
   "homepage": "https://github.com/mdwalters/MDWalters125",
   "dependencies": {
     "dotenv": "^16.0.3",
-    "node-fetch": "^3.3.0",
-    "ws": "^8.10.0",
-    "meowerbot": "^1.2.5"
+    "meowerbot": "^1.4.3",
+    "node-fetch": "^3.3.0"
   }
 }
