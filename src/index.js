@@ -19,7 +19,7 @@ const musixmatch = new Musixmatch(process.env["MB_APIKEY"]);
 const bot = new Bot(username, password);
 
 bot.onPost(async (user, message, origin) => {
-    if (message.startsWith(`@${username} `) && !(help.includes(`@${username} ${message.split(" ")[0]}`))) {
+    if (message.startsWith(`@${username} `) && !(help.includes(`@${username} ${message.split(" ")[1]}`))) {
         bot.post(`That command doesn't exist! Use @${username} help to see a list of commands.`, origin);
         return;
     }
