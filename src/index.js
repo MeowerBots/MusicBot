@@ -9,13 +9,18 @@ dotenv.config();
 
 const username = process.env["MB_USERNAME"];
 const password = process.env["MB_PASSWORD"];
-const help = [":help", ":search", ":find", ":lyrics"];
+const help = [
+    `@${username} help`,
+    `@${username} search`,
+    `@${username} find`,
+    `@${username} lyrics`
+];
 const musixmatch = new Musixmatch(process.env["MB_APIKEY"]);
 const bot = new Bot(username, password);
 
 bot.onPost(async (user, message, origin) => {
-    if (message.startsWith(":") && !(help.includes(message.split(" ")[0]))) {
-        bot.post("That command doesn't exist! Use :help to see a list of commands.", origin);
+    if (message.startsWith(`@${username} `) && !(help.includes(`@${username} ${message.split(" ")[0]}`))) {
+        bot.post(`That command doesn't exist! Use @${username} help to see a list of commands.`, origin);
         return;
     }
 
@@ -24,8 +29,8 @@ bot.onPost(async (user, message, origin) => {
     ${help.join(", ")}`, origin);
     }
 
-    if (message.startsWith(":search")) {
-        let results = await musixmatch.search(message.split(" ").slice(1, message.split(" ").length).join(" "));
+    if (message.startsWith(`@${username} search`)) {
+        let results = await musixmatch.search(message.split(" ").slice(2, message.split(" ").length).join(" "));
         if (results.length === 0) {
             bot.post("No results found.", origin);
         } else {
@@ -36,8 +41,8 @@ bot.onPost(async (user, message, origin) => {
         }
     }
 
-    if (message.startsWith(":find")) {
-        let song = await musixmatch.song(message.split(" ")[1]);
+    if (message.startsWith(`@${username} find`)) {
+        let song = await musixmatch.song(message.split(" ")[2]);
         if (song === "") {
             bot.post("Couldn't get info about this song.", origin);
         } else {
@@ -51,8 +56,8 @@ bot.onPost(async (user, message, origin) => {
         }
     }
 
-    if (message.startsWith(":lyrics")) {
-        let lyrics = await musixmatch.lyrics(message.split(" ")[1]);
+    if (message.startsWith(`@${username} lyrics`)) {
+        let lyrics = await musixmatch.lyrics(message.split(" ")[2]);
         if (lyrics === "") {
             bot.post("Couldn't find the lyrics for this song.", origin);
         } else {
@@ -74,5 +79,5 @@ bot.onMessage((data) => {
 });
 
 bot.onLogin(() => {
-    bot.post(`${username} is now online! Use :help to see a ist of commands.`);
+    bot.post(`${username} is now online! Use @${username} help to see a ist of commands.`);
 });
