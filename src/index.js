@@ -24,7 +24,7 @@ bot.onPost(async (user, message, origin) => {
         return;
     }
 
-    if (message.startsWith(":help")) {
+    if (message.startsWith(`@${username} help`)) {
         bot.post(`Commands:
     ${help.join(", ")}`, origin);
     }
