@@ -4,22 +4,22 @@ A Meower bot that gives info about music!
 ### help
 Shows a list of commands
 ```
-:help
+@MusicBot help
 ```
 ### search
 Searches for a song
 ```
-:search [query]
+@MusicBot search [query]
 ```
 ### find
 Looks for a song with the specified ID
 ```
-:find [song id]
+@MusicBot find [song id]
 ```
 ### lyrics
 Looks for lyrics associated with the song with the specified ID
 ```
-:lyrics [song id]
+@MusicBot lyrics [song id]
 ```
 ## Running
 ```
